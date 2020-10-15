@@ -1,3 +1,77 @@
+public class p2q7
+{
+  public static void main(String[] args)
+  {
+    stack s = new stack();
+    s.push(1);
+    s.push(3);
+    s.pop();
+    System.out.println(s.top());
+  }
+}
+
+class stack
+{
+  private query full;
+  private query empty;
+  private int count;
+  public stack()
+  {
+    full  = new query();
+    empty = new query();
+    count = 0;
+  }
+
+  public boolean empty()
+  {
+    return this.count == 0;
+  }
+  
+  public boolean push(int i)
+  {
+    count++;
+    full.push(i);
+    return true;
+  }
+
+  public boolean pop()
+  {
+    int num = count;
+    if(this.empty())
+      return false;
+    while(num!=1)
+    {
+      empty.push(full.top());
+      full.pop();
+      num--;
+    }
+    full.pop();
+    query tmp = full;
+    full = empty;
+    empty = tmp;
+    count--;
+    return true;
+  }
+
+  public int top()
+  {
+    int tmp = 0;
+    if(this.empty())
+      return 0;
+    while(!full.empty())
+    {
+      empty.push(full.top());
+      tmp = full.top();
+      full.pop();
+    }
+    query q = full;
+    full = empty;
+    empty = q;
+    return tmp;
+  }
+
+}
+
 class query
 {
   private class node
